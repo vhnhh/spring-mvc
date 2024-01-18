@@ -111,8 +111,9 @@ public class PostDaoImp implements IPostDao {
         Connection conn = null;
         CallableStatement callSt = null;
         try {
+            searchList = new ArrayList<>();
             conn = ConnectDB.openConnection();
-            conn.prepareCall("select *from post where title like ? or content like ?");
+            callSt = (CallableStatement) conn.prepareCall("select * from post where title like ? or content like ?");
             callSt.setString(1, "%" + search + "%");
             callSt.setString(2, "%" + search + "%");
             ResultSet rs = callSt.executeQuery();
